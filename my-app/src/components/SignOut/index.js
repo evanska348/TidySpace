@@ -1,11 +1,18 @@
 import React from 'react';
-
+import * as ROUTES from '../../constants/routes';
+import { NavLink } from 'mdbreact'
 import { withFirebase } from '../Firebase';
 
 const SignOutButton = ({ firebase }) => (
-  <button type="button" onClick={firebase.doSignOut}>
-    Sign Out
-  </button>
+  <NavLink className="nav-link waves-effect waves-light" to={ROUTES.SIGN_IN} onClick={firebase.doSignOut}>Sign Out</NavLink>
+  // <button
+  //   style={{
+  //     padding: 0, border: "none",
+  //     font: "inherit", color: "inherit", backgroundColor: "transparent", cursor: "pointer"
+  //   }}
+  //   onClick={firebase.doSignOut}>
+  //   Sign Out
+  // </button>
 );
 
 export default withFirebase(SignOutButton);
