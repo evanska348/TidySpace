@@ -21,7 +21,7 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <Navbar color="teal" dark expand="md" scrolling>
-    <NavbarBrand href="/WelcomePage">
+    <NavbarBrand href="/home">
       <strong>TidySpace</strong>
     </NavbarBrand>
     <NavbarNav left>
@@ -76,14 +76,9 @@ const NavigationNonAuth = () => (
   //   </li>
   // </ul>
   <Navbar color="teal" dark expand="md" scrolling>
-    <NavbarBrand href="/WelcomePage">
+    <NavbarBrand>
       <strong>TidySpace</strong>
     </NavbarBrand>
-    <NavbarNav left>
-      <NavItem>
-        <NavLink exact className="nav-link waves-effect waves-light" aria-haspopup="true" aria-expanded="false" to={ROUTES.SIGN_IN}>Sign In</NavLink>
-      </NavItem>
-    </NavbarNav>
   </Navbar>
 );
 

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
 const PasswordForgetPage = () => (
   <div>
-    <h1>PasswordForget</h1>
     <PasswordForgetForm />
   </div>
 );
@@ -48,20 +48,47 @@ class PasswordForgetFormBase extends Component {
     const isInvalid = email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={this.state.email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="6">
+            <form onSubmit={this.onSubmit}>
+              <p className="h4 text-center mb-4">Password Reset Request</p>
+              <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
+                Your email
+            </label>
+              <input
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Email Address"
+                type="email"
+                className="form-control"
+              />
+              <div className="text-center mt-4">
+                <MDBBtn color="indigo" type="submit">Email Reset</MDBBtn>
+                <Link to={ROUTES.SIGN_IN}>
+                  <MDBBtn color="unique" type="submit">Back to Login</MDBBtn>
+                </Link>
+              </div>
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+      // <form onSubmit={this.onSubmit}>
+      //   <input
+      //     name="email"
+      //     value={this.state.email}
+      //     onChange={this.onChange}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   />
+      //   <button disabled={isInvalid} type="submit">
+      //     Reset My Password
+      //   </button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+      //   {error && <p>{error.message}</p>}
+      // </form>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -8,11 +9,8 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
+  <div style={{ marginLeft: "auto", marginRight: "auto", width: "60vw"}}>
     <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
   </div>
 );
 
@@ -55,30 +53,74 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+      // <form onSubmit={this.onSubmit}>
+      //   <input
+      //     name="email"
+      //     value={email}
+      //     onChange={this.onChange}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   />
+      //   <input
+      //     name="password"
+      //     value={password}
+      //     onChange={this.onChange}
+      //     type="password"
+      //     placeholder="Password"
+      //   />
+      //   <button disabled={isInvalid} type="submit">
+      //     Sign In
+      //   </button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="8">
+            <form onSubmit={this.onSubmit}>
+              <p className="h4 text-center mb-4">Sign in</p>
+              <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
+                Your email
+          </label>
+              <input
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Email Address"
+                type="email"
+                id="defaultFormLoginEmailEx"
+                className="form-control"
+              />
+              <br />
+              <label htmlFor="defaultFormLoginPasswordEx" className="grey-text">
+                Your password
+          </label>
+              <input
+                name="password"
+                value={password}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Password"
+                type="password"
+                id="defaultFormLoginPasswordEx"
+                className="form-control"
+              />
+              <div className="text-center mt-4">
+                <MDBBtn color="indigo" type="submit">Login</MDBBtn>
+              </div>
+              {error && <p>{error.message}</p>}
+            </form>
+            <PasswordForgetLink style={{ textAlign: "center" }} />
+            <SignUpLink style={{ textAlign: "center" }} />
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     );
   }
 }
+
+
 
 const SignInForm = compose(
   withRouter,

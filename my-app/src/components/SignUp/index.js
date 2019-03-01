@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
     <SignUpForm />
   </div>
 );
@@ -72,39 +72,113 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">Sign Up</button>
+      // <form onSubmit={this.onSubmit}>
+      //   <input
+      //     name="username"
+      //     value={username}
+      //     onChange={this.onChange}
+      //     type="text"
+      //     placeholder="Full Name"
+      //   />
+      //   <input
+      //     name="email"
+      //     value={email}
+      //     onChange={this.onChange}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   />
+      //   <input
+      //     name="passwordOne"
+      //     value={passwordOne}
+      //     onChange={this.onChange}
+      //     type="password"
+      //     placeholder="Password"
+      //   />
+      //   <input
+      //     name="passwordTwo"
+      //     value={passwordTwo}
+      //     onChange={this.onChange}
+      //     type="password"
+      //     placeholder="Confirm Password"
+      //   />
+      //   <button disabled={isInvalid} type="submit">Sign Up</button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="6">
+            <form onSubmit={this.onSubmit}>
+              <p className="h4 text-center mb-4">Sign up</p>
+              <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
+                Your name
+                </label>
+              <input
+                name="username"
+                value={username}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Full Name"
+                className="form-control"
+              />
+              <br />
+              <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
+                Your email
+                </label>
+              <input
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Email Address"
+                type="email"
+                className="form-control"
+              />
+              <br />
+              <label
+                htmlFor="defaultFormRegisterPasswordEx"
+                className="grey-text"
+              >
+                Your password
+                </label>
+              <input
+                name="passwordOne"
+                value={passwordOne}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Password"
+                type="password"
+                className="form-control"
+              />
+              <br />
+              <label
+                htmlFor="defaultFormRegisterPasswordEx"
+                className="grey-text"
+              >
+                Confirm password
+                </label>
+              <input
+                name="passwordTwo"
+                value={passwordTwo}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Confirm Password"
+                type="password"
+                className="form-control"
+              />
+              <div className="text-center mt-4">
+                <MDBBtn color="indigo" type="submit">
+                  Register
+                  </MDBBtn>
+                <Link style={{ color: "white" }} to={ROUTES.SIGN_IN}>
+                  <MDBBtn color="unique">Back to log in</MDBBtn>
+                </Link>
+              </div>
+              {error && <p>{error.message}</p>}
+            </form>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     );
   }
 }
