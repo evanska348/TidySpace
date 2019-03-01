@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { NavbarToggler, MDBCollapse, Navbar, NavbarBrand, NavItem, NavbarNav, NavLink } from 'mdbreact'
+// import { Link } from 'react-router-dom';
+import { Navbar, NavbarBrand, NavItem, NavbarNav, NavLink } from 'mdbreact'
 
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
@@ -26,7 +26,7 @@ const NavigationAuth = () => (
     </NavbarBrand>
     <NavbarNav left>
       <NavItem>
-        <NavLink className="nav-link waves-effect waves-light" to={ROUTES.HOME}>Home</NavLink>
+        <NavLink className="nav-link waves-effect waves-light" to={ROUTES.HOME}>Spaces</NavLink>
       </NavItem>
       {/* <NavItem>
         <NavLink className="nav-link waves-effect waves-light" to={ROUTES.TODOS}>Todos</NavLink>
@@ -34,9 +34,9 @@ const NavigationAuth = () => (
       <NavItem>
         <NavLink className="nav-link waves-effect waves-light" to={ROUTES.ACCOUNT}>Account</NavLink>
       </NavItem>
-      <NavItem>
+      {/* <NavItem>
         <NavLink className="nav-link waves-effect waves-light" to={ROUTES.ADMIN}>Admin</NavLink>
-      </NavItem>
+      </NavItem> */}
       <NavbarNav right>
         <NavItem>
           <SignOutButton />

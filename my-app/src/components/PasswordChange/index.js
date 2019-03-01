@@ -68,7 +68,8 @@ class PasswordChangeForm extends Component {
         <MDBRow>
           <MDBCol md="6">
             <form onSubmit={this.onSubmit}>
-              <p className="h4 mb-4">Account: {this.props.email}</p>
+              <p className="h4 mb-4">Account Username: {this.props.username}</p>
+              <p className="h4 mb-4">Account Email: {this.props.email}</p>
               <p className="h4 mb-4">Change your password</p>
 
               <label htmlFor="defaultFormLoginPasswordEx" className="grey-text">

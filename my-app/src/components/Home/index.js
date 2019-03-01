@@ -3,8 +3,8 @@ import React from 'react';
 import { withAuthorization } from '../Session';
 
 const HomePage = () => (
-  <div>
-    <h1>Home Page</h1>
+  <div style={{marginLeft: "10vw"}}>
+    <h1>Your Spaces</h1>
     <p>The Home Page is accessible by every signed in user.</p>
   </div>
 );

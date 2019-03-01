@@ -8,7 +8,7 @@ const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
-        <PasswordChangeForm email={authUser.email} />
+        <PasswordChangeForm email={authUser.email} username={authUser.username} />
       </div>
     )}
   </AuthUserContext.Consumer>

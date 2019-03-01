@@ -9,7 +9,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
-  <div style={{ marginLeft: "auto", marginRight: "auto", width: "60vw"}}>
+  <div style={{ marginLeft: "auto", marginRight: "auto", width: "60vw" }}>
     <SignInForm />
   </div>
 );
@@ -76,7 +76,7 @@ class SignInFormBase extends Component {
       // </form>
       <MDBContainer>
         <MDBRow>
-          <MDBCol md="8">
+          <MDBCol md="9">
             <form onSubmit={this.onSubmit}>
               <p className="h4 text-center mb-4">Sign in</p>
               <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
@@ -89,7 +89,6 @@ class SignInFormBase extends Component {
                 type="text"
                 placeholder="Email Address"
                 type="email"
-                id="defaultFormLoginEmailEx"
                 className="form-control"
               />
               <br />
@@ -103,7 +102,6 @@ class SignInFormBase extends Component {
                 type="password"
                 placeholder="Password"
                 type="password"
-                id="defaultFormLoginPasswordEx"
                 className="form-control"
               />
               <div className="text-center mt-4">
@@ -111,8 +109,10 @@ class SignInFormBase extends Component {
               </div>
               {error && <p>{error.message}</p>}
             </form>
-            <PasswordForgetLink style={{ textAlign: "center" }} />
-            <SignUpLink style={{ textAlign: "center" }} />
+            <div className="text-center mt-4">
+              <PasswordForgetLink />
+              <SignUpLink />
+            </div>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
