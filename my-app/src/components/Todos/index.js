@@ -13,7 +13,29 @@ class TodosBase extends Component {
     this.state = {
       loading: false,
       todos: [],
+      filtered: []
     };
+    this.handleChange = this.handleChange.bind(this);
+
+  }
+
+  handleChange(e) {
+    let currentList = [];
+    let newList = [];
+
+    if (e.target.value !== "") {
+      currentList = this.state.todos;
+      newList = currentList.filter(item => {
+        const lc = item.todo.toLowerCase();
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter);
+      });
+    } else {
+      newList = this.state.todos;
+    }
+    this.setState({
+      filtered: newList
+    });
   }
 
   componentDidMount() {
@@ -29,6 +51,7 @@ class TodosBase extends Component {
 
       this.setState({
         todos: todosList,
+        filtered: todosList,
         loading: false,
       });
     });
@@ -50,7 +73,8 @@ class TodosBase extends Component {
         <AddTodo />
         <hr />
         <h1>Item List</h1>
-        <TodoList todos={todos} deleteTodo={this.deleteTodo} />
+        <input type="text" className="input" onChange={(this.handleChange)} placeholder="Search..." />
+        <TodoList todos={this.state.filtered} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
@@ -65,7 +89,7 @@ const TodoList = ({ todos, deleteTodo }) => (
         <button onClick={() => deleteTodo(todo.todoid)} style={{
           background: "none", border: "none"
         }}>
-          <i class="fa fa-close"></i>
+          <i className="fa fa-close"></i>
         </button>
       </div>
     ))}
