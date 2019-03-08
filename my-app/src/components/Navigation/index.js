@@ -28,9 +28,9 @@ const NavigationAuth = () => (
       <NavItem>
         <NavLink className="nav-link waves-effect waves-light" to={ROUTES.HOME}>Spaces</NavLink>
       </NavItem>
-      {/* <NavItem>
-        <NavLink className="nav-link waves-effect waves-light" to={ROUTES.TODOS}>Todos</NavLink>
-      </NavItem> */}
+      <NavItem>
+        <NavLink className="nav-link waves-effect waves-light" to={ROUTES.TODOS}>Item Inventory</NavLink>
+      </NavItem>
       <NavItem>
         <NavLink className="nav-link waves-effect waves-light" to={ROUTES.ACCOUNT}>Account</NavLink>
       </NavItem>

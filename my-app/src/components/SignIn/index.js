@@ -57,7 +57,7 @@ class SignInFormBase extends Component {
       //   <input
       //     name="email"
       //     value={email}
-      //     onChange={this.onChange}
+      //     onChange={thygbis.onChange}
       //     type="text"
       //     placeholder="Email Address"
       //   />
@@ -74,7 +74,7 @@ class SignInFormBase extends Component {
 
       //   {error && <p>{error.message}</p>}
       // </form>
-      <MDBContainer>
+      <MDBContainer className="text-center mt-4">
         <MDBRow>
           <MDBCol md="9">
             <form onSubmit={this.onSubmit}>

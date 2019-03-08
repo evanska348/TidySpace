@@ -46,26 +46,30 @@ class TodosBase extends Component {
     const { todos } = this.state;
 
     return (
-      <div>
+      <div style={{ marginLeft: "10vw" }}>
         <AddTodo />
-        <h1>Todo list</h1>
-        <TodoList todos={todos} deleteTodo={this.deleteTodo}/>
+        <hr />
+        <h1>Item List</h1>
+        <TodoList todos={todos} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
 }
 
+
 const TodoList = ({ todos, deleteTodo }) => (
-  <ul>
+  <div style={{ display: "flex", flexWrap: "wrap" }}>
     {todos.map(todo => (
-      <li key={todo.todoid}>
+      <div key={todo.todoid} style={{ border: "1px solid black", padding: "1rem", marginRight: "2rem" }}>
         {todo.todo}
-        <button onClick={() => deleteTodo(todo.todoid)}>
-          Delete
+        <button onClick={() => deleteTodo(todo.todoid)} style={{
+          background: "none", border: "none"
+        }}>
+          <i class="fa fa-close"></i>
         </button>
-      </li>
+      </div>
     ))}
-  </ul>
+  </div>
 );
 
 class AddTodoBase extends Component {
@@ -100,10 +104,10 @@ class AddTodoBase extends Component {
           value={todo}
           onChange={this.onChange}
           type="text"
-          placeholder="Enter todo"
+          placeholder="Enter Item"
         />
         <button variant="contained" color="primary" disabled={invalid} type="submit">
-          Add Todo
+          Add Item
         </button>
       </form>
     );
