@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 
 const INITIAL_STATE = {
   todo: '',
+  location: ''
 };
 
 class TodosBase extends Component {
@@ -74,23 +75,24 @@ class TodosBase extends Component {
         <hr />
         <h1>Item List</h1>
         <input type="text" className="input" onChange={(this.handleChange)} placeholder="Search..." />
-        <TodoList todos={this.state.filtered} deleteTodo={this.deleteTodo} />
+        <TodoList todos={this.state.todos} />
       </div>
     );
   }
 }
 
 
-const TodoList = ({ todos, deleteTodo }) => (
+const TodoList = ({ todos }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {todos.map(todo => (
       <div key={todo.todoid} style={{ border: "1px solid black", padding: "1rem", marginRight: "2rem" }}>
-        {todo.todo}
-        <button onClick={() => deleteTodo(todo.todoid)} style={{
-          background: "none", border: "none"
+        <button style={{
+          background: "none", border: "none", float: "right"
         }}>
           <i className="fa fa-close"></i>
         </button>
+        <p>Name: {todo.todo} {"\n"}</p>
+        <p>Location: {todo.location}</p>
       </div>
     ))}
   </div>
@@ -107,6 +109,7 @@ class AddTodoBase extends Component {
     var newTodo = this.props.firebase.todos().push({
       created: new Date().toISOString().replace('T', ' ').replace('Z', ''),
       todo: this.state.todo,
+      location: this.state.location
     });
     this.setState({ ...INITIAL_STATE });
     event.preventDefault();
@@ -114,6 +117,9 @@ class AddTodoBase extends Component {
 
   onChange = event => {
     this.setState({ todo: event.target.value });
+  }
+  onChangeLocation = event => {
+    this.setState({ location: event.target.value });
   }
 
   render() {
@@ -128,7 +134,14 @@ class AddTodoBase extends Component {
           value={todo}
           onChange={this.onChange}
           type="text"
-          placeholder="Enter Item"
+          placeholder="Enter item name"
+        />
+        <input
+          name="todo"
+          value={this.state.location}
+          onChange={this.onChangeLocation}
+          type="text"
+          placeholder="Enter location"
         />
         <button variant="contained" color="primary" disabled={invalid} type="submit">
           Add Item
