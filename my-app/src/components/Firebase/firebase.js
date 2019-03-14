@@ -33,6 +33,9 @@ class Firebase {
   // *** Todos API ***
   todo = todoid => this.db.ref(`todos/${todoid}`);
   todos = () => this.db.ref('todos');
+
+  area = areaid => this.db.ref(`area/${areaid}`);
+  areas = () => this.db.ref('areas');
 }
 
 export default Firebase;

@@ -18,58 +18,46 @@ class HomePage extends Component {
 
     this.state = {
       loading: false,
-      todos: [],
+      areas: [],
     };
 
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-
-    this.props.firebase.todos().on('value', snapshot => {
-      const todosObject = snapshot.val();
-
-      const todosList = Object.keys(todosObject || {}).map(key => ({
-        ...todosObject[key],
-        todoid: key,
+    this.props.firebase.areas().on('value', snapshot => {
+      const areasObject = snapshot.val();
+      const arealist = Object.keys(areasObject || {}).map(key => ({
+        ...areasObject[key],
+        areaid: key,
       }));
-      // todosList = [...new Set(todosList.map(x => x.location))]
       this.setState({
-        todos: todosList,
+        areas: arealist,
         loading: false,
       });
     });
   }
 
   componentWillUnmount() {
-    this.props.firebase.todos().off();
-  }
-
-
-  componentWillUnmount() {
-    this.props.firebase.todos().off();
-  }
-
-  deleteTodo = todoid => {
-    this.props.firebase.todo(todoid).remove();
+    this.props.firebase.areas().off();
   }
 
   render() {
     return (
       <div style={{ marginLeft: "10vw" }}>
-        <h1>Item List</h1>
-        <TodoList todos={this.state.todos} />
+        <h1>Area List</h1>
+        <AreaList areas={this.state.areas} />
       </div>
     );
   }
 }
 
 
-const TodoList = ({ todos }) => (
+const AreaList = ({ areas }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
-    {todos.map(todo => (
-      <div key={todo.todoid} style={{ border: "1px solid black", padding: "1rem", marginRight: "2rem" }}>
-        <p>{todo.location}</p>
+    {areas.map(area => (
+      <div key={area.value} style={{ border: "1px solid black", padding: "1rem", marginRight: "2rem" }}>
+        <p>{area.value}</p>
       </div>
     ))}
   </div>
