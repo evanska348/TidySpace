@@ -9,6 +9,8 @@
     "mdbreact": "^4.11.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-modal": "^3.8.1",
+    "react-modal-bootstrap": "^1.1.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
     "react-select": "^2.4.2",

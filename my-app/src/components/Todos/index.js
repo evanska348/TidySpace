@@ -105,15 +105,18 @@ class TodosBase extends Component {
 const TodoList = ({ todos, deleteTodo }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {todos.map(todo => (
-      <div key={todo.todoid} style={{ border: "1px solid black", padding: "1rem", marginRight: "2rem" }}>
+      <div key={todo.todoid} style={{
+        border: "1px solid #99d5cf", padding: "1rem", borderRadius: "2rem", marginRight: "2rem",
+        marginBottom: "2rem", marginTop: "2rem", backgroundColor: "#99d5cf"
+      }}>
         <button onClick={() => deleteTodo(todo.todoid)} style={{
           background: "none", border: "none", float: "right"
         }}>
           <i className="fa fa-close"></i>
         </button>
-        <p>Name: {todo.todo} {"\n"}</p>
-        <p>Area: {todo.area.value}</p>
-        <p>Location: {todo.location}</p>
+        <p style={{ fontWeight: "500" }}>Name: {todo.todo} {"\n"}</p>
+        <p style={{ fontWeight: "500" }}>Area: {todo.area.value}</p>
+        <p style={{ fontWeight: "500" }}>Location: {todo.location}</p>
       </div>
     ))}
   </div>
