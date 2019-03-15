@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/evanzhao/uw/tidyspace/precache-manifest.9354037b04e63398aca77aabcc1e46c8.js"
+  "/evanzhao/uw/TidySpace/precache-manifest.963cdd971685e85e925f998e5816b497.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/evanzhao/uw/tidyspace/index.html", {
+workbox.routing.registerNavigationRoute("/evanzhao/uw/TidySpace/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
