@@ -3,7 +3,9 @@ import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import { withAuthorization } from '../Session';
 import Modal from 'react-modal';
-
+import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -82,7 +84,7 @@ class HomePage extends Component {
     return (
       <div style={{ marginLeft: "10vw" }}>
         <h1>Area List</h1>
-        <AreaList areas={this.state.areas} todos={this.state.todos} />
+        <AreaList areas={this.state.areas} todos={this.state.todos} firebase={this.props.firebase} />
       </div>
     );
   }
@@ -90,7 +92,7 @@ class HomePage extends Component {
 
 Modal.setAppElement(document.getElementById('root'));
 
-const AreaList = ({ areas, todos }) => (
+const AreaList = ({ areas, todos, firebase }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {areas.map(area => (
       <div key={area.value} style={{
@@ -98,7 +100,7 @@ const AreaList = ({ areas, todos }) => (
         marginBottom: "2rem", marginTop: "2rem", backgroundColor: "#99d5cf"
       }}>
         <h4 style={{ fontWeight: "400" }}>{area.value}</h4>
-        <AreaItem items={todos} area={area} />
+        <AreaItem items={todos} area={area} firebase={this.firebase} />
       </div>
     ))}
   </div>
@@ -152,6 +154,8 @@ class AreaItem extends Component {
   }
 
   render() {
+    let db = this.props.firebase;
+    db.ref("todos/Ldwh8lUYIJFsqpIbnjM").update({ missing: false })
     var items = this.state.items;
     var filtered = [];
     var area = this.state.area;
@@ -160,6 +164,7 @@ class AreaItem extends Component {
         filtered.push(items[i])
       }
     }
+    console.log(filtered)
     return (
       <div>
         <Card>
@@ -168,7 +173,6 @@ class AreaItem extends Component {
               <Typography component="p">
                 No Items
         </Typography>
-
               :
               <TodoView todos={filtered} area={this.props.area} ></TodoView>
             }
@@ -187,7 +191,7 @@ class AreaItem extends Component {
         >
 
           <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.area.value}</h2>
-          <TodoList todos={filtered} area={this.props.area} />
+          <TodoList todos={filtered} area={this.props.area} firebase={this.props.firebase} />
           <button className="btn btn-warning" onClick={this.closeModal}>close</button>
         </Modal>
       </div>
@@ -198,7 +202,7 @@ class AreaItem extends Component {
 const TodoView = ({ todos, area }) => (
   <div>
     {todos.map(todo => (
-      <div>
+      <div key={todo.todoid} >
         <Typography component="p">
           {todo.todo}
         </Typography>
@@ -210,18 +214,37 @@ const TodoView = ({ todos, area }) => (
   </div>
 );
 
-const TodoList = ({ todos, area }) => (
+
+function handleLowChange(id, firebase) {
+  if (firebase.ref("todos/" + id) + 'low' == true) {
+    firebase.ref("todos/" + id).update({ low: false });
+  } else {
+    firebase.ref("todos/" + id).update({ low: true });
+  }
+}
+
+function handleMissingChange(id, firebase) {
+  if (firebase.ref("todos/" + id) + 'missing' == true) {
+    firebase.ref("todos/" + id).update({ missing: false });
+  } else {
+    firebase.ref("todos/" + id).update({ missing: true });
+  }
+}
+
+const TodoList = ({ todos, area, firebase }) => (
+
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {todos.map(todo => (
       <div key={todo.todoid} style={{ padding: ".4rem", marginRight: "2rem", border: '1px solid black' }}>
         <p>Name: {todo.todo} {"\n"}</p>
         <p>Area: {todo.area.value}</p>
         <p>Location: {todo.location}</p>
+        <p>Created: {todo.created}</p>
         <FormControlLabel
           control={
             <Switch
-            // checked='false'
-            // onChange={this.handleChange('gilad')}
+              checked={todo.low}
+              onChange={handleLowChange(todo.todoid, firebase)}
             // value="gilad"
             />
           }
@@ -230,8 +253,8 @@ const TodoList = ({ todos, area }) => (
         <FormControlLabel
           control={
             <Switch
-            // checked='false'
-            // onChange={this.handleChange('gilad')}
+              checked={todo.missing}
+              onChange={handleMissingChange(todo.todoid, this.firebase)}
             // value="gilad"
             />
           }

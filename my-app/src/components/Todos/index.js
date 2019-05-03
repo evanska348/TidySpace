@@ -133,7 +133,9 @@ class AddTodoBase extends Component {
       created: new Date().toISOString().replace('T', ' ').replace('Z', ''),
       todo: this.state.todo,
       location: this.state.location,
-      area: this.state.area
+      area: this.state.area,
+      missing: false,
+      low: false
     });
     this.setState({ ...INITIAL_STATE });
     event.preventDefault();
