@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/evanzhao/uw/TidySpace/static/js/runtime~main.be4673cb.js"
   },
   {
-    "revision": "94998475f6aea65f558494802416c1cf",
-    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Thin.94998475.ttf"
+    "revision": "e31fcf1885e371e19f5786c2bdfeae1b",
+    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Bold.e31fcf18.ttf"
   },
   {
     "revision": "ad30cf50f2ad2da091c8",
@@ -52,12 +52,12 @@ self.__precacheManifest = [
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Light.a990f611.eot"
   },
   {
-    "revision": "30799efa5bf74129468ad4e257551dc3",
-    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Regular.30799efa.eot"
-  },
-  {
     "revision": "dfe56a876d0282555d1e2458e278060f",
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Thin.dfe56a87.eot"
+  },
+  {
+    "revision": "30799efa5bf74129468ad4e257551dc3",
+    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Regular.30799efa.eot"
   },
   {
     "revision": "4d9f3f9e5195e7b074bb63ba4ce42208",
@@ -88,12 +88,16 @@ self.__precacheManifest = [
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Bold.39b2c303.woff2"
   },
   {
-    "revision": "ba3dcd8903e3d0af5de7792777f8ae0d",
-    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Regular.ba3dcd89.woff"
+    "revision": "7500519de3d82e33d1587f8042e2afcb",
+    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Thin.7500519d.woff"
   },
   {
     "revision": "3b813c2ae0d04909a33a18d792912ee7",
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Light.3b813c2a.woff"
+  },
+  {
+    "revision": "ba3dcd8903e3d0af5de7792777f8ae0d",
+    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Regular.ba3dcd89.woff"
   },
   {
     "revision": "fc78759e93a6cac50458610e3d9d63a0",
@@ -104,8 +108,8 @@ self.__precacheManifest = [
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Bold.dc81817d.woff"
   },
   {
-    "revision": "7500519de3d82e33d1587f8042e2afcb",
-    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Thin.7500519d.woff"
+    "revision": "94998475f6aea65f558494802416c1cf",
+    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Thin.94998475.ttf"
   },
   {
     "revision": "46e48ce0628835f68a7369d0254e4283",
@@ -118,10 +122,6 @@ self.__precacheManifest = [
   {
     "revision": "894a2ede85a483bf9bedefd4db45cdb9",
     "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Medium.894a2ede.ttf"
-  },
-  {
-    "revision": "e31fcf1885e371e19f5786c2bdfeae1b",
-    "url": "/evanzhao/uw/TidySpace/static/media/Roboto-Bold.e31fcf18.ttf"
   },
   {
     "revision": "ad30cf50f2ad2da091c8",
