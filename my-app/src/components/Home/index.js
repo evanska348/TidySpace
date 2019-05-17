@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Tooltip from '@material-ui/core/Tooltip';
 // import {
 //   Modal,
 //   ModalHeader,
@@ -74,15 +75,41 @@ class HomePage extends Component {
     });
   }
 
+  changeLow(todoid, value) {
+    let todos = this.state.todos;
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].todoid === todoid) {
+        todos[i].low = value;
+      }
+    }
+    this.setState({ todos: todos })
+  }
+
+  componentWillUnmount() {
+    this.props.firebase.areas().off();
+  }
+
+  changeMissing(todoid, value) {
+    let todos = this.state.todos;
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].todoid === todoid) {
+        todos[i].missing = value;
+      }
+    }
+    this.setState({ todos: todos })
+  }
+
   componentWillUnmount() {
     this.props.firebase.areas().off();
   }
 
   render() {
+    console.log(this.state.todos)
     return (
       <div style={{ marginLeft: "10vw" }}>
         <h1>Area List</h1>
-        <AreaList areas={this.state.areas} todos={this.state.todos} />
+        <AreaList low={this.changeLow.bind(this)} missing={this.changeMissing.bind(this)}
+          areas={this.state.areas} todos={this.state.todos} firebase={this.props.firebase} />
       </div>
     );
   }
@@ -90,7 +117,7 @@ class HomePage extends Component {
 
 Modal.setAppElement(document.getElementById('root'));
 
-const AreaList = ({ areas, todos }) => (
+const AreaList = ({ missing, low, areas, todos, firebase }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {areas.map(area => (
       <div key={area.value} style={{
@@ -98,7 +125,7 @@ const AreaList = ({ areas, todos }) => (
         marginBottom: "2rem", marginTop: "2rem", backgroundColor: "#99d5cf"
       }}>
         <h4 style={{ fontWeight: "400" }}>{area.value}</h4>
-        <AreaItem items={todos} area={area} />
+        <AreaItem missing={missing} items={todos} low={low} area={area} firebase={firebase} />
       </div>
     ))}
   </div>
@@ -117,13 +144,14 @@ const customStyles = {
 
 class AreaItem extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       modalIsOpen: false,
       items: [],
       area: [],
+      firebase: '',
     };
 
     this.openModal = this.openModal.bind(this);
@@ -135,6 +163,7 @@ class AreaItem extends Component {
     this.setState({
       items: this.props.items,
       area: this.props.area,
+      firebase: this.props.firebase
     })
   }
 
@@ -151,6 +180,18 @@ class AreaItem extends Component {
     this.setState({ modalIsOpen: false });
   }
 
+  // handleLowChange = (todo) => {
+  //   firebase.todos().child(todo.todoid).set({
+  //     created: todo.created,
+  //     todo: todo.todo,
+  //     area: todo.area,
+  //     location: todo.location,
+  //     missing: todo.missing,
+  //     low: !todo.status
+  //   })
+  //   // this.setState({ [name]: event.target.checked });
+  // };
+
   render() {
     var items = this.state.items;
     var filtered = [];
@@ -161,7 +202,7 @@ class AreaItem extends Component {
       }
     }
     return (
-      <div>
+      < div >
         <Card>
           <CardContent>
             {filtered.length === 0 ?
@@ -187,42 +228,72 @@ class AreaItem extends Component {
         >
 
           <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.area.value}</h2>
-          <TodoList todos={filtered} area={this.props.area} />
+          <TodoList missing={this.props.missing} low={this.props.low} todos={filtered}
+            area={this.props.area} handleLowChange={this.handleLowChange} firebase={this.state.firebase} />
           <button className="btn btn-warning" onClick={this.closeModal}>close</button>
         </Modal>
-      </div>
+      </div >
     );
   }
 }
 
+
 const TodoView = ({ todos, area }) => (
   <div>
     {todos.map(todo => (
-      <div>
+      <div key={todo.todoid} style={{ position: 'relative' }}>
         <Typography component="p">
           {todo.todo}
+          <span style={{ fontSize: '1.5rem', color: 'red', display: 'inline-block', position: 'absolute', right: 0 }}>
+            {todo.missing && (
+              <Tooltip title="Item Missing">
+                <i className="fa fa-exclamation-circle"></i>
+              </Tooltip>
+            )}
+          </span>
+          <span style={{ fontSize: '1.5rem', color: 'orange', display: 'inline-block', position: 'absolute', right: 0 }}>
+            {todo.low && (
+              <Tooltip title="Item Low">
+                <i className="fa fa-exclamation-circle"></i>
+              </Tooltip>
+            )}
+          </span>
         </Typography>
         <Typography color="textSecondary">
           {todo.location}
         </Typography>
+        {/* {todo.low === true ?
+          <p>low</p>
+          :
+          <p></p>
+        } */}
       </div>
     ))}
   </div>
 );
 
-const TodoList = ({ todos, area }) => (
+const TodoList = ({ missing, low, todos, area, firebase }) => (
   <div style={{ display: "flex", flexWrap: "wrap" }}>
     {todos.map(todo => (
-      <div key={todo.todoid} style={{ padding: ".4rem", marginRight: "2rem", border: '1px solid black' }}>
-        <p>Name: {todo.todo} {"\n"}</p>
-        <p>Area: {todo.area.value}</p>
-        <p>Location: {todo.location}</p>
-        <FormControlLabel
+      <Card key={todo.todoid} style={{ margin: '5px' }}>
+        <CardContent style={{ paddingBottom: 0 }}>
+          {/* <div key={todo.todoid} style={{ padding: ".4rem", marginRight: "2rem", border: '1px solid black' }}> */}
+
+          <Typography gutterBottom variant="h5" component="h5">
+            {todo.todo} {"\n"}
+          </Typography>
+          <Typography component="p">
+            Area: {todo.area.value}
+          </Typography>
+          <Typography component="p">
+            Location: {todo.location}
+          </Typography>
+          {/* <FormControlLabel
           control={
             <Switch
-            // checked='false'
-            // onChange={this.handleChange('gilad')}
-            // value="gilad"
+              // checked='True'
+              onChange={changeLow(firebase, todo)}
+              value="gilad"
             />
           }
           label="Item Low"
@@ -230,17 +301,112 @@ const TodoList = ({ todos, area }) => (
         <FormControlLabel
           control={
             <Switch
-            // checked='false'
+            // checked={todo.missing}
             // onChange={this.handleChange('gilad')}
             // value="gilad"
             />
           }
           label="Item Missing"
-        />
-      </div>
+        /> */}
+          <CardActions>
+            <LowMissing missing={missing} low={low} todo={todo} firebase={firebase} />
+          </CardActions>
+        </CardContent>
+      </Card>
     ))}
   </div>
 );
+
+class LowMissing extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      low: this.props.todo.low,
+      missing: this.props.todo.missing,
+      todo: this.props.todo,
+      firebase: this.props.firebase
+    };
+  }
+
+  changeLow = todo => event => {
+    if (this.state.missing === true && event.target.checked) {
+      this.state.firebase.todos().child(todo.todoid).set({
+        created: todo.created,
+        todo: todo.todo,
+        area: todo.area,
+        location: todo.location,
+        missing: false,
+        low: event.target.checked
+      })
+      this.props.missing(todo.todoid, false);
+      this.setState({ missing: false });
+    } else {
+      this.state.firebase.todos().child(todo.todoid).set({
+        created: todo.created,
+        todo: todo.todo,
+        area: todo.area,
+        location: todo.location,
+        missing: todo.missing,
+        low: event.target.checked
+      })
+    }
+    this.setState({ low: event.target.checked })
+    this.props.low(todo.todoid, event.target.checked)
+  }
+
+  changeMissing = todo => event => {
+    if (this.state.low === true && event.target.checked) {
+      this.state.firebase.todos().child(todo.todoid).set({
+        created: todo.created,
+        todo: todo.todo,
+        area: todo.area,
+        location: todo.location,
+        missing: event.target.checked,
+        low: false
+      })
+      this.props.low(todo.todoid, false);
+      this.setState({ low: false });
+    } else {
+      this.state.firebase.todos().child(todo.todoid).set({
+        created: todo.created,
+        todo: todo.todo,
+        area: todo.area,
+        location: todo.location,
+        missing: event.target.checked,
+        low: todo.low
+      })
+    }
+    this.setState({ missing: event.target.checked })
+    this.props.missing(todo.todoid, event.target.checked)
+  }
+
+  render() {
+    return (
+      <div>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.low}
+              onChange={this.changeLow(this.state.todo)}
+            />
+          }
+          label="Item Low"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.missing}
+              onChange={this.changeMissing(this.state.todo)}
+            />
+          }
+          label="Item Missing"
+        />
+      </div>
+    )
+  }
+}
 
 const condition = authUser => !!authUser;
 
